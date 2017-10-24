@@ -93,7 +93,7 @@ class ProcesadorTemporizador:
         json_message = self.string_to_json(body)
         if float(json_message['body_temporizador']) = simulate_hours_of_medicamentos() :
             monitor = Monitor()
-            monitor.print_notification('necesita su medicamento',json_message['datetime'], json_message['id'])
+            monitor.print_notification('necesita su medicamento ' + json_message['body_temporizador'],json_message['datetime'], json_message['id'])
         time.sleep(1)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 

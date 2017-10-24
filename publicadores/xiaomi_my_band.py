@@ -95,10 +95,12 @@ class XiaomiMyBand:
     battery_level = 81
     id = 0
     hora_medicina = 0
+    nombre_medicamento =" "
 
-    def __init__(self, id, hora_medicina):
+    def __init__(self, id, hora_medicina,nombre_medicamento):
         self.id = id
         self.hora_medicina = hora_medicina
+        self.nombre_medicamento=nombre_medicamento
 
     def publish(self):
         message = {}
@@ -196,6 +198,7 @@ class XiaomiMyBand:
 
         message = {}
         message['body_temporizador'] = self.hora_medicina
+        message['body_nombre_medicamento']=self.nombre_medicamento
         message['id'] = str(self.id)
         message['datetime'] = self.simulate_datetime()
         message['producer'] = self.producer
