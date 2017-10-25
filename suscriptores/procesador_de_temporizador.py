@@ -40,7 +40,7 @@
 #           +------------------------+--------------------------+-----------------------+
 #           |                        |  - ch: propio de Rabbit. |  - Procesa y detecta  |
 #           |                        |  - method: propio de     |    valores extremos   |
-#           |                        |     Rabbit.              |    de la temperatura. |
+#           |                        |     Rabbit.              |    del  temporizador. |
 #           |       callback()       |  - properties: propio de |                       |
 #           |                        |     Rabbit.              |                       |
 #           |                        |  - body: mensaje recibi- |                       |
