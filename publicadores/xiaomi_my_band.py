@@ -95,9 +95,10 @@ class XiaomiMyBand:
     battery_level = 81
     id = 0
     hora_medicina = 0
+    adultos_mayores = 0
     nombre_medicamento =" "
 
-    def __init__(self, id, hora_medicina,nombre_medicamento):
+    def __init__(self, id, hora_medicina,nombre_medicamento,adultos_mayores):
         self.id = id
         self.hora_medicina = hora_medicina
         self.nombre_medicamento=nombre_medicamento
@@ -197,7 +198,8 @@ class XiaomiMyBand:
         sleep(.5)
 
         message = {}
-        message['body_temporizador'] = self.hora_medicina
+        message['body_temporizador'] = self.adultos_mayores
+        message['body_hora_medicina'] = self.hora_medicina
         message['body_nombre_medicamento']=self.nombre_medicamento
         message['id'] = str(self.id)
         message['datetime'] = self.simulate_datetime()

@@ -104,5 +104,5 @@ class ProcesadorAcelerometro:
         return message
 
 if __name__ == '__main__':
-    p_temperatura = ProcesadorAcelerometro()
-    p_temperatura.consume()
+    p_acelerometro = ProcesadorAcelerometro()
+    p_acelerometro.consume()

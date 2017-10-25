@@ -49,10 +49,7 @@
 #           |    string_to_json()    |  - string: texto a con-  |  - Convierte un string|
 #           |                        |     vertir en JSON.      |    en un objeto JSON. |
 #           +------------------------+--------------------------+-----------------------+
-#           |simulate_hours_of_      |        Ninguno           |   -Genera una valor   |
-#           |  medicamentos ()       |                          |    aleatoria que va   |
-#           |                        |                          |    desde 1 a 24       |
-#           +------------------------+--------------------------+-----------------------+
+#           
 #
 #
 #           Nota: "propio de Rabbit" implica que se utilizan de manera interna para realizar
@@ -64,6 +61,7 @@
 #-------------------------------------------------------------------------
 import pika
 import sys
+import random
 sys.path.append('../')
 from monitor import Monitor
 import time
@@ -73,6 +71,7 @@ class ProcesadorTemporizador:
 
     def consume(self):
         try:
+           
             # Se establece la conexión con el Distribuidor de Mensajes
             connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
             # Se solicita un canal por el cuál se enviarán los signos vitales
@@ -88,14 +87,115 @@ class ProcesadorTemporizador:
             sys.exit("Conexión finalizada...")
             time.sleep(1)
             sys.exit("Programa terminado...")
+    
 
     def callback(self, ch, method, properties, body):
-        json_message = self.string_to_json(body)
-        if float(json_message['body_temporizador']) = simulate_hours_of_medicamentos() :
-            monitor = Monitor()
-            monitor.print_notification('necesita su medicamento ' + json_message['body_temporizador'],json_message['datetime'], json_message['id'])
-        time.sleep(1)
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+	try:         
+		json_message = self.string_to_json(body)
+		time.sleep(2)
+		#este for se utiliza para simular el paso de las horas 
+		for h in range(0,len(json_message['body_temporizador'])):
+
+			if float(json_message['body_hora_medicina']) == float(1) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+
+			if float(json_message['body_hora_medicina']) == float(2) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+
+			if float(json_message['body_hora_medicina']) == float(3) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(4) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(5) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(6) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(7) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(8) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(9) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(10) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(11) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+					
+
+			if float(json_message['body_hora_medicina']) == float(12) :
+			    monitor = Monitor()
+			    monitor.print_notification('necesita su medicamento ' + json_message['body_nombre_medicamento'],json_message['datetime'], json_message['id'])
+			    ch.basic_ack(delivery_tag=method.delivery_tag)
+			    break
+			
+				
+		
+	except (KeyboardInterrupt, SystemExit):
+            channel.close()  # Se cierra la conexión
+            sys.exit("Conexión finalizada...")
+            time.sleep(1)
+            sys.exit("Programa terminado...")
+
 
     def string_to_json(self, string):
         message = {}
@@ -107,10 +207,9 @@ class ProcesadorTemporizador:
             message[v[0].replace('\'', '')] = v[1].replace('\'', '')
         return message
     
-    def simulate_hours_of_medicamentos(self):
-        return random.uniform(1, 24)
+    
         
 
 if __name__ == '__main__':
-    p_temperatura = ProcesadorTemporizador()
-    p_temperatura.consume()
+    p_temporizador = ProcesadorTemporizador()
+    p_temporizador.consume()

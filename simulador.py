@@ -39,12 +39,19 @@
 #           |                         |                          |    car los signos vi- |
 #           |                         |                          |    tales.             |
 #           +-------------------------+--------------------------+-----------------------+
-#
+#	    |                         |                          |  - Inicializa los     |
+#           |                         |                          |    procesadores en    |
+#           |     start_consumers()   |          Ninguno         |    nuevas terminales  |
+#           |                         |                          |    para hacer el      |
+#           |                         |                          |    monitoreo	         |
+#           +-------------------------+--------------------------+-----------------------+
 #-------------------------------------------------------------------------
 import sys
+import os
 import progressbar
 from time import sleep
 sys.path.append('publicadores')
+
 from xiaomi_my_band import XiaomiMyBand
 from pyfiglet import figlet_format
 
@@ -64,7 +71,7 @@ class Simulador:
         print('|        CONFIGURACIÓN DE LA SIMULACIÓN       |')
         print('+---------------------------------------------+')
         adultos_mayores = raw_input('|ingresa el número de adultos mayores: ')
-        hora_medicamento = raw_input('|ingresa la hora en que se debe tomar el medicamento (1 - 24) :')
+        hora_medicamento = raw_input('|ingresa la hora en que se debe tomar el medicamento (1 - 12) :')
         nombre_medicamento = raw_input('|ingresa el nombre del medicamento :')
         print('+---------------------------------------------+')
         raw_input('presiona enter para continuar: ')
@@ -72,7 +79,7 @@ class Simulador:
         print('|            ASIGNACIÓN DE SENSORES           |')
         print('+---------------------------------------------+')
         for x in xrange(0, int(adultos_mayores)):
-            s = XiaomiMyBand(self.id_inicial,hora_medicamento,nombre_medicamento)
+            s = XiaomiMyBand(self.id_inicial,hora_medicamento,nombre_medicamento,adultos_mayores)
             self.sensores.append(s)
             print('| wearable Xiaomi My Band asignado, id: ' + str(self.id_inicial))
             print('+---------------------------------------------+')
@@ -83,14 +90,16 @@ class Simulador:
         print('')
         print('*Nota: Se enviarán 1000 mensajes como parte de la simulación')
         raw_input('presiona enter para iniciar: ')
+	self.start_consumers()
         self.start_sensors()
 
     def start_sensors(self):
-        for x in xrange(0, 1000):
+        for x in xrange(0, 10000):
             for s in self.sensores:
                 s.publish()
 
     def draw_progress_bar(self, value):
+	
         bar = progressbar.ProgressBar(maxval=value, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         bar.start()
         for i in xrange(value):
@@ -98,6 +107,18 @@ class Simulador:
             sleep(0.2)
         bar.finish()
 
+    def start_consumers(self):
+	sys.path.append('suscriptores')
+	os.system("gnome-terminal -e 'bash -c \"cd suscriptores ; python procesador_de_temporizador.py" + "; sleep 5 \"'")
+	
+	os.system("gnome-terminal -e 'bash -c \"cd suscriptores ; python procesador_de_acelerometro.py" + "; sleep 5 \"'")
+	os.system("gnome-terminal -e 'bash -c \"cd suscriptores ; python procesador_de_presion.py" + "; sleep 5 \"'")
+	os.system("gnome-terminal -e 'bash -c \"cd suscriptores ; python procesador_de_ritmo_cardiaco.py" + "; sleep 5 \"'")
+	os.system("gnome-terminal -e 'bash -c \"cd suscriptores ; python procesador_de_temperatura.py" + "; sleep 5 \"'")
+	
+	
+	
+	
 if __name__ == '__main__':
     simulador = Simulador()
     simulador.set_up_sensors()
